@@ -21,10 +21,12 @@ BOOTSTRAP = """# @title Setup (chạy ô này trước)
 # Colab bắt đầu với một máy trống — clone repo và cài dependency.
 import os, subprocess, sys
 
-REPO = "https://github.com/hieutrungdao/Day21-Track3-Finetuning-Lab.git"
-if not os.path.exists("Day21-Track3-Finetuning-Lab"):
+REPO = "https://github.com/Lolavine777/Day21-Track3-Finetuning-Lab-2A202601934-NguyenDangLong.git"
+REPO_DIR = os.path.basename(REPO).replace(".git", "")
+if not os.path.exists(REPO_DIR):
     subprocess.run(["git", "clone", "-q", REPO], check=True)
-os.chdir("Day21-Track3-Finetuning-Lab")
+os.chdir(REPO_DIR)
+subprocess.run(["git", "pull", "-q"], check=False)
 sys.path.insert(0, "src")
 
 # Install from requirements.txt, NOT a copied list. The copied list is how the
