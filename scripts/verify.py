@@ -74,19 +74,19 @@ def smoke() -> None:
               f"{sum(1 for _ in p.open(encoding='utf-8'))} rows" if p.exists()
               else "missing — run scripts/make_seed_data.py")
 
-    # NOTE: pyproject sets addopts="-q". Passing -q again yields -qq, which hides the
-    # summary line. Use -rN + --tb=no and let the configured -q stand.
     proc = subprocess.run(
-        [sys.executable, "-m", "pytest", str(ROOT / "tests"), "--tb=no", "-rN"],
+        [sys.executable, "-m", "pytest", str(ROOT / "tests"), "--tb=short", "-ra"],
         capture_output=True, text=True, cwd=ROOT)
     lines = [l.strip() for l in (proc.stdout or proc.stderr).splitlines() if l.strip()]
-    # The last line may be pytest's progress dots; the summary is the line that reports
-    # counts. Search backwards for it rather than assuming position.
     summary = next(
         (l for l in reversed(lines)
          if ("passed" in l or "failed" in l or "error" in l) and not set(l) <= set(". %[]0123456789")),
         lines[-1] if lines else f"exit {proc.returncode}",
     )
+    if proc.returncode != 0:
+        fails = [l for l in lines if l.startswith("FAILED")]
+        if fails:
+            summary += f" ({', '.join(fails[:3])})"
     check("unit tests", OK if proc.returncode == 0 else FAIL, summary)
 
 
