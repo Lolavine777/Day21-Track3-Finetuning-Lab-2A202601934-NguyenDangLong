@@ -1,0 +1,31 @@
+{
+  "experiment": "Bonus B4 Controlled Rank Sweep",
+  "tier": "T4",
+  "model": "unsloth/Qwen3.5-4B",
+  "placement": "text-linear",
+  "learning_rate": 0.0001,
+  "steps": 30,
+  "results": [
+    {
+      "r": 8,
+      "lora_alpha": 16,
+      "trainable_params": 16232448,
+      "train_loss": 0.7861,
+      "train_seconds": 951.2
+    },
+    {
+      "r": 16,
+      "lora_alpha": 32,
+      "trainable_params": 32464896,
+      "train_loss": 0.6254,
+      "train_seconds": 972.7
+    },
+    {
+      "r": 64,
+      "lora_alpha": 128,
+      "trainable_params": 129859584,
+      "train_loss": 0.5628,
+      "train_seconds": 1012.4
+    }
+  ]
+}

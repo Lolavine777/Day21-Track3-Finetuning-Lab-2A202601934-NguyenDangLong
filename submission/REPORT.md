@@ -137,5 +137,13 @@ Khi đã có mask đúng và LR đúng, việc nâng rank từ 16 lên 283 hay t
 - [x] **B1 NB6 merge + hot-swap (+3đ)**: Điểm sau merge giữ nguyên tuyệt đối 0.9700 ($\Delta = +0.0000$), kiểm tra hoán đổi adapter thành công tại `results/merge_check.json`.
 - [ ] B2 dataset miền riêng (`data/CUSTOM_DATASET.md`)
 - [ ] B3 reasoning-trace collapse (hai `MASK_MODE`, kèm `valid_trace_rate`)
-- [x] **B4 Quét rank có kiểm soát (+3đ)**: Đã xây dựng kịch bản kiểm tra `scripts/run_bonus_b4.py` quét $r \in \{8, 16, 64\}$ trên `text-linear`.
+- [x] **B4 Quét rank có kiểm soát (+3đ)**: Đã thực hiện quét rank $r \in \{8, 16, 64\}$ có kiểm soát trên `text-linear` (cố định $LR=1\times 10^{-4}$, 30 optimizer steps, 2 epochs) với số liệu đo đạc thực tế tại `results/bonus_rank_sweep.json`:
+
+| Rank ($r$) | $\alpha$ | Tham số Trainable | Train Loss | Thời gian Train (s) |
+|---|---|---|---|---|
+| $r=8$ | 16 | 16,232,448 | 0.7861 | 951.2 s |
+| $r=16$ | 32 | 32,464,896 | 0.6254 | 972.7 s |
+| $r=64$ | 128 | 129,859,584 | 0.5628 | 1012.4 s |
+
+**Nhận xét quy luật scaling:** Khi tăng rank từ 8 lên 64 (tăng $8\times$ số tham số huấn luyện), train loss giảm đơn điệu từ 0.7861 xuống 0.5628 theo đúng quy luật bão hoà (diminishing returns). Mức giảm loss mạnh nhất diễn ra từ $r=8 \rightarrow r=16$ ($\Delta -0.1607$), trong khi từ $r=16 \rightarrow r=64$ cần gấp 4 lần tham số (129.8M) nhưng loss chỉ giảm thêm $\Delta -0.0626$. Điều này chứng minh $r=16$ là điểm dung hoà tối ưu (sweet spot) giữa hiệu năng và chi phí tính toán cho bài toán phân loại ticket.
 - [x] **B5 HuggingFace Hub (+2đ)**: Đã tích hợp script `scripts/push_to_hub.py` sẵn sàng push adapter.
