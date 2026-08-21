@@ -10,8 +10,9 @@ __pycache__/
 # notebooks/*.py (jupytext) is the source of truth and IS committed.
 # colab/*.ipynb is generated and IS committed (students launch from it).
 
-# Lab artifacts — adapters and splits are large/generated
+# Lab artifacts — adapters and splits
 adapters/*/
+!adapters/correct/
 !adapters/.gitkeep
 data/split/
 data/CUSTOM_DATASET.md
