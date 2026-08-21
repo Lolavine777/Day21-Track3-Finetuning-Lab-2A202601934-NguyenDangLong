@@ -13,6 +13,7 @@ __pycache__/
 # Lab artifacts — adapters and splits
 adapters/*/
 !adapters/correct/
+adapters/correct/*.safetensors
 !adapters/.gitkeep
 data/split/
 data/CUSTOM_DATASET.md
@@ -21,6 +22,7 @@ data/CUSTOM_DATASET.md
 !results/*.csv
 gguf/
 *.gguf
+*.zip
 runs/
 wandb/
 
